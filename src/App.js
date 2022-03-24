@@ -23,7 +23,7 @@ function App() {
             const response = await fetch(url)
             const data = await response.json();
             if(response.ok){
-              setWeatherInfo(` ${data.name}, ${data.sys.country}, ${data.weather[0].description}, ${Math.trunc(data.main.temp)/10}°c`)
+              setWeatherInfo(data)
               setErrorMessage("")
             }else{
               setErrorMessage(data.message)
@@ -55,8 +55,8 @@ function App() {
       let year = d.getFullYear();
       return `${day} ${date} ${month} ${year}`
     }
-
-   console.log(weatherInfo)
+    
+   console.log(weatherInfo);
     return(
       <>
       <div className='app'>
@@ -73,10 +73,17 @@ function App() {
       {loading ? (<div>loading...</div>) : (
         <>
         {errorMessage ? (<div style={{color:"red"}}> {errorMessage}</div>) : 
-        (<div>
+        (((typeof weatherInfo.main != "undefined") ? (
+          <div>
           <div className='date'>{dataBuilder(new Date())}</div>
-          <div className='weather'>{weatherInfo}</div>
-        </div>  )}
+          
+          <div className='weather'>{weatherInfo.name}</div>
+          <div className='weather'>{weatherInfo.sys?.country}</div>
+           {/* <div className='weather'>{weatherInfo.weather[0]?.description}</div> */}
+          <div className='temp'>{Math.round(weatherInfo.main?.temp)/10}°c</div> 
+        </div>
+        ):( ""))
+          )}
         </>
       )}
       </main>
