@@ -56,7 +56,7 @@ function App() {
       return `${day} ${date} ${month} ${year}`
     }
     
-   console.log(weatherInfo);
+   
     return(
       <>
       <div className='app'>
